@@ -111,13 +111,6 @@ declare module 'fuse.js' {
   }
 }
 
-// vuedraggable
-declare module 'vuedraggable/dist/vuedraggable.common' {
-  import { DefineComponent } from 'vue'
-  const draggable: DefineComponent
-  export default draggable
-}
-
 // vue-cropper
 declare module 'vue-cropper' {
   import { DefineComponent } from 'vue'

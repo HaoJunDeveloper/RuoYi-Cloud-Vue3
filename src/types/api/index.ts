@@ -23,6 +23,3 @@ export * from "./system/operlog";
 export * from "./monitor/job";
 export * from "./monitor/jobLog";
 export * from "./monitor/online";
-
-// 代码生成模块
-export * from "./tool/gen";
