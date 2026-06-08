@@ -1,8 +1,8 @@
 <template>
-   <div class="app-container">
-      <el-row :gutter="20">
+   <div class="app-container profile-page">
+      <el-row :gutter="20" class="profile-grid">
          <el-col :span="6" :xs="24">
-            <el-card class="box-card">
+            <el-card class="box-card profile-card">
                <template v-slot:header>
                  <div class="clearfix">
                    <span>个人信息</span>
@@ -42,7 +42,7 @@
             </el-card>
          </el-col>
          <el-col :span="18" :xs="24">
-            <el-card>
+            <el-card class="profile-card profile-tabs-card">
                <template v-slot:header>
                  <div class="clearfix">
                    <span>基本资料</span>
@@ -100,3 +100,73 @@ onMounted(() => {
   getUser()
 })
 </script>
+
+<style lang="scss" scoped>
+.profile-page {
+  min-height: 100%;
+
+  :deep(.profile-grid) {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+}
+
+.profile-card {
+  overflow: hidden;
+  border-radius: 24px;
+
+  :deep(.el-card__header) {
+    padding: 18px 22px !important;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+    background: linear-gradient(180deg, rgba(248, 251, 255, 0.98) 0%, rgba(255, 255, 255, 0.96) 100%);
+    color: var(--studio-title);
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  :deep(.el-card__body) {
+    padding: 22px !important;
+  }
+}
+
+.profile-tabs-card {
+  min-height: 520px;
+
+  :deep(.el-tabs__header) {
+    margin-bottom: 22px;
+  }
+
+  :deep(.el-tabs__item) {
+    font-weight: 700;
+    color: var(--studio-muted);
+  }
+
+  :deep(.el-tabs__item.is-active) {
+    color: var(--studio-accent);
+  }
+}
+
+.list-group-striped > .list-group-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 46px;
+  border-color: rgba(226, 232, 240, 0.78);
+  color: var(--studio-text);
+}
+
+.list-group-item :deep(.svg-icon) {
+  margin-right: 8px;
+  color: var(--studio-accent);
+}
+
+.pull-right {
+  max-width: 58%;
+  color: var(--studio-title);
+  font-weight: 700;
+  text-align: right;
+}
+</style>

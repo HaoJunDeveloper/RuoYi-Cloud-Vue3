@@ -1,6 +1,6 @@
 // base color
-$blue: #324157;
-$light-blue: #333c46;
+$blue: #2563eb;
+$light-blue: #60a5fa;
 $red: #C03639;
 $pink: #E65D6E;
 $green: #30B08F;
@@ -9,30 +9,30 @@ $yellow: #FEC171;
 $panGreen: #30B08F;
 
 // 默认主题变量
-$menuText: #bfcbd9;
-$menuActiveText: #409eff;
-$menuBg: #1a1f2e;
-$menuHover: #263445;
+$menuText: #cbd5e1;
+$menuActiveText: #ffffff;
+$menuBg: #0f172a;
+$menuHover: #1e3a8a;
 
 // 浅色主题theme-light
 $menuLightBg: #ffffff;
-$menuLightHover: #f0f1f5;
-$menuLightText: #303133;
-$menuLightActiveText: #409EFF;
+$menuLightHover: #eff6ff;
+$menuLightText: #334155;
+$menuLightActiveText: #2563eb;
 
 // 基础变量
 $base-sidebar-width: 200px;
 $sideBarWidth: 200px;
 
 // 菜单暗色变量
-$base-menu-color: rgba(255,255,255,.65);
+$base-menu-color: rgba(226, 232, 240, .76);
 $base-menu-color-active: #ffffff;
-$base-menu-background: #1a1f2e;
-$base-sub-menu-background: #141824;
-$base-sub-menu-hover: rgba(255,255,255,.06);
+$base-menu-background: #0f172a;
+$base-sub-menu-background: #111827;
+$base-sub-menu-hover: rgba(37, 99, 235, .2);
 
 // 组件变量
-$--color-primary: #409EFF;
+$--color-primary: #2563eb;
 $--color-success: #67C23A;
 $--color-warning: #E6A23C;
 $--color-danger: #F56C6C;
@@ -71,10 +71,26 @@ $--color-info: #909399;
   --sidebar-bg: #{$menuBg};
   --sidebar-text: #{$menuText};
   --menu-hover: #{$menuHover};
-  
+
   --navbar-bg: #ffffff;
   --navbar-text: #303133;
-  
+
+  --studio-bg: #f4f7fb;
+  --studio-panel: rgba(255, 255, 255, 0.92);
+  --studio-panel-solid: #ffffff;
+  --studio-title: #0f172a;
+  --studio-text: #334155;
+  --studio-muted: #64748b;
+  --studio-border: rgba(148, 163, 184, 0.22);
+  --studio-shadow: 0 18px 42px rgba(15, 23, 42, 0.08);
+  --studio-shadow-soft: 0 10px 26px rgba(15, 23, 42, 0.06);
+  --studio-accent: #2563eb;
+  --studio-accent-soft: rgba(37, 99, 235, 0.1);
+  --studio-shell-bg: radial-gradient(circle at 18% 0%, rgba(37, 99, 235, 0.12), transparent 30%), linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);
+  --studio-sidebar-bg: radial-gradient(circle at 12% 0%, rgba(96, 165, 250, 0.26), transparent 30%), linear-gradient(180deg, #0f172a 0%, #111827 100%);
+  --studio-sidebar-card: rgba(15, 23, 42, 0.62);
+  --studio-sidebar-active: rgba(37, 99, 235, 0.24);
+
   /* splitpanes default-theme 变量 */
   --splitpanes-default-bg: #ffffff;
 
@@ -91,7 +107,7 @@ html.dark {
   --el-border-color-light: #434343;
   --el-menu-text-color: #d0d0d0;
   --sidebar-logo-text: #d0d0d0;
-  
+
   /* primary */
   --primary-bg: #18212b;
 
@@ -101,21 +117,36 @@ html.dark {
   --menu-hover: #2d2d2d;
   --menu-active-text: #{$menuActiveText};
 
+  --studio-bg: #0b1220;
+  --studio-panel: rgba(15, 23, 42, 0.86);
+  --studio-panel-solid: #111827;
+  --studio-title: #f8fafc;
+  --studio-text: #cbd5e1;
+  --studio-muted: #94a3b8;
+  --studio-border: rgba(148, 163, 184, 0.18);
+  --studio-shadow: 0 18px 42px rgba(0, 0, 0, 0.32);
+  --studio-shadow-soft: 0 10px 26px rgba(0, 0, 0, 0.22);
+  --studio-accent: var(--el-color-primary, #2563eb);
+  --studio-accent-soft: rgba(37, 99, 235, 0.2);
+  --studio-shell-bg: radial-gradient(circle at 18% 0%, rgba(37, 99, 235, 0.18), transparent 30%), linear-gradient(180deg, #0b1220 0%, #111827 100%);
+  --studio-sidebar-bg: linear-gradient(180deg, #111827 0%, #0f172a 100%);
+  --studio-sidebar-card: rgba(15, 23, 42, 0.72);
+  --studio-sidebar-active: rgba(37, 99, 235, 0.28);
+
   /* 顶部导航栏 */
   --navbar-bg: #141414;
   --navbar-text: #ffffff;
   --navbar-hover: #141414;
 
   /* 标签栏 */
-  --tags-bg: #141414;
-  --tags-item-bg: #1d1e1f;
-  --tags-item-border: #303030;
-  --tags-item-text: #d0d0d0;
-  --tags-item-hover: #2d2d2d;
-  --tags-close-hover: #64666a;
+  --tags-bg: rgba(15, 23, 42, 0.72);
+  --tags-item-bg: rgba(30, 41, 59, 0.82);
+  --tags-item-border: rgba(148, 163, 184, 0.16);
+  --tags-item-text: #cbd5e1;
+  --tags-item-hover: rgba(37, 99, 235, 0.2);
+  --tags-close-hover: rgba(148, 163, 184, 0.32);
   /* 卡片模式激活页签 */
-  --tags-card-active-bg: var(--el-bg-color-overlay);
-  --tags-card-active-bg: color-mix(in srgb, var(--el-color-primary) 22%, var(--el-bg-color-overlay) 78%);
+  --tags-card-active-bg: color-mix(in srgb, var(--el-color-primary) 22%, var(--studio-panel-solid) 78%);
   --tags-card-active-border: var(--tags-card-active-bg);
 
   /* splitpanes 组件暗黑模式变量 */
@@ -128,7 +159,7 @@ html.dark {
   --blockquote-bg: #1d1e1f;
   --blockquote-border: #303030;
   --blockquote-text: #d0d0d0;
-  
+
   /* Cron 时间表达式 模式变量 */
   --cron-border: #303030;
 
@@ -324,7 +355,7 @@ html.dark {
       background-color: var(--el-bg-color-overlay);
     }
   }
-  
+
   /* 下拉菜单样式覆盖 */
   .el-dropdown-menu__item:not(.is-disabled):focus, .el-dropdown-menu__item:not(.is-disabled):hover{
     background-color: var(--navbar-hover) !important;
@@ -336,7 +367,7 @@ html.dark {
     border-left-color: var(--blockquote-border) !important;
     color: var(--blockquote-text) !important;
   }
-  
+
   /* 时间表达式标题样式覆盖 */
   .popup-result .title {
     background: var(--cron-border);
@@ -349,4 +380,3 @@ html.dark {
     border-top: 1px solid var(--el-bg-color) !important;
   }
 }
-

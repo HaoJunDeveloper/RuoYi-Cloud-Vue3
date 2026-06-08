@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-const url = ref<string>('https://gitee.com/y_project/RuoYi-Cloud')
+const url = ref<string>('https://www.smallpig1997.top/')
 
 function goto(): void {
   window.open(url.value)

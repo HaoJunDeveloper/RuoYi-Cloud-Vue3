@@ -97,7 +97,25 @@ function handleCurrentChange(val: number) {
 
 <style scoped>
 .pagination-container {
-  background: #fff;
+  background: transparent;
+}
+.pagination-container :deep(.el-pagination) {
+  --el-pagination-bg-color: transparent;
+  --el-pagination-button-bg-color: rgba(255, 255, 255, 0.96);
+  --el-pagination-hover-color: var(--studio-accent, #2563eb);
+  --el-pagination-button-disabled-bg-color: rgba(241, 245, 249, 0.88);
+}
+.pagination-container :deep(.btn-prev),
+.pagination-container :deep(.btn-next),
+.pagination-container :deep(.el-pager li) {
+  border-radius: 12px;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.04);
+}
+.pagination-container :deep(.el-pager li.is-active) {
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  color: #fff;
+  border-color: transparent;
 }
 .pagination-container.hidden {
   display: none;

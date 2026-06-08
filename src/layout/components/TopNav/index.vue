@@ -172,42 +172,46 @@ onMounted(() => {
 
 <style lang="scss">
 .topmenu-container.el-menu--horizontal {
-  height: 50px !important;
+  height: 44px !important;
   border-bottom: none;
+  background: transparent;
 }
 
-.topmenu-container.el-menu--horizontal > .el-menu-item {
-  float: left;
-  height: 50px !important;
-  line-height: 50px !important;
-  color: #303133 !important;
-  padding: 0 5px !important;
-  margin: 0 10px !important;
-}
-
-.topmenu-container.el-menu--horizontal > .el-menu-item.is-active, .el-menu--horizontal > .el-sub-menu.is-active .el-submenu__title {
-  border-bottom: 2px solid #{'var(--theme)'} !important;
-  color: #303133;
-}
-
-/* sub-menu item */
+.topmenu-container.el-menu--horizontal > .el-menu-item,
 .topmenu-container.el-menu--horizontal > .el-sub-menu .el-sub-menu__title {
   float: left;
-  height: 50px !important;
-  line-height: 50px !important;
-  color: #303133 !important;
-  padding: 0 5px !important;
-  margin: 0 10px !important;
+  height: 38px !important;
+  line-height: 38px !important;
+  color: var(--studio-text, #334155) !important;
+  padding: 0 14px !important;
+  margin: 3px 4px !important;
+  border-radius: 14px;
+  border-bottom: none !important;
+  font-weight: 750;
+  letter-spacing: 0.01em;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* 背景色隐藏 */
-.topmenu-container.el-menu--horizontal>.el-menu-item:not(.is-disabled):focus, .topmenu-container.el-menu--horizontal>.el-menu-item:not(.is-disabled):hover, .topmenu-container.el-menu--horizontal>.el-submenu .el-submenu__title:hover {
-  background-color: #ffffff;
+.topmenu-container.el-menu--horizontal > .el-menu-item.is-active,
+.topmenu-container.el-menu--horizontal > .el-sub-menu.is-active .el-sub-menu__title {
+  color: #{'var(--theme)'} !important;
+  background: color-mix(in srgb, #{'var(--theme)'} 12%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, #{'var(--theme)'} 18%, transparent), 0 8px 18px rgba(37, 99, 235, 0.06);
+}
+
+/* 顶部菜单交互 */
+.topmenu-container.el-menu--horizontal > .el-menu-item:not(.is-disabled):focus,
+.topmenu-container.el-menu--horizontal > .el-menu-item:not(.is-disabled):hover,
+.topmenu-container.el-menu--horizontal > .el-sub-menu .el-sub-menu__title:hover {
+  color: #{'var(--theme)'} !important;
+  background: color-mix(in srgb, #{'var(--theme)'} 10%, transparent) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, #{'var(--theme)'} 12%, transparent);
+  transform: translateY(-1px);
 }
 
 /* 图标右间距 */
 .topmenu-container .svg-icon {
-  margin-right: 4px;
+  margin-right: 6px;
 }
 
 /* topmenu more arrow */

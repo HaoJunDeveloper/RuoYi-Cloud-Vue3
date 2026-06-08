@@ -71,11 +71,53 @@ function setLayout() {
   position: relative;
   height: 100%;
   width: 100%;
+  color: var(--studio-text, #334155);
+  background: var(--studio-shell-bg, #f4f7fb);
+  overflow-x: hidden;
+
+  &::before,
+  &::after {
+    content: '';
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  &::before {
+    top: 0;
+    right: 0;
+    width: 42vw;
+    height: 42vw;
+    min-width: 360px;
+    min-height: 360px;
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.14), transparent 62%);
+    transform: translate(28%, -34%);
+  }
+
+  &::after {
+    left: 200px;
+    bottom: -180px;
+    width: 520px;
+    height: 520px;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.08), transparent 64%);
+  }
 
   &.mobile.openSidebar {
     position: fixed;
     top: 0;
   }
+}
+
+.main-container {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+.app-wrapper :deep(.app-main) {
+  background: transparent;
+  padding: 18px;
+  box-sizing: border-box;
 }
 
 .main-container:has(.fixed-header) {
@@ -84,13 +126,13 @@ function setLayout() {
 }
 
 .drawer-bg {
-  background: #000;
-  opacity: 0.3;
-  width: 100%;
-  top: 0;
-  height: 100%;
-  position: absolute;
+  position: fixed;
+  inset: 0;
   z-index: 999;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.42);
+  backdrop-filter: blur(4px);
 }
 
 .fixed-header {
@@ -100,6 +142,10 @@ function setLayout() {
   z-index: 9;
   width: calc(100% - #{vars.$base-sidebar-width});
   transition: width 0.28s;
+  border-bottom: 1px solid var(--studio-border, rgba(148, 163, 184, 0.18));
+  background: var(--studio-panel, rgba(255, 255, 255, 0.88));
+  backdrop-filter: blur(18px);
+  box-shadow: var(--studio-shadow-soft, 0 10px 26px rgba(15, 23, 42, 0.06));
 }
 
 .hideSidebar .fixed-header {
@@ -112,5 +158,11 @@ function setLayout() {
 
 .mobile .fixed-header {
   width: 100%;
+}
+
+@media (max-width: 768px) {
+  .app-wrapper :deep(.app-main) {
+    padding: 12px;
+  }
 }
 </style>

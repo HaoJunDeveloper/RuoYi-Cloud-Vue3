@@ -32,196 +32,168 @@ const message = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-.wscn-http404-container{
-  transform: translate(-50%,-50%);
-  position: absolute;
-  top: 40%;
-  left: 50%;
+.wscn-http404-container {
+  position: relative;
+  min-height: 100%;
+  padding: 72px 24px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 16% 12%, rgba(37, 99, 235, 0.14), transparent 28%),
+    radial-gradient(circle at 82% 18%, rgba(14, 165, 233, 0.12), transparent 30%),
+    var(--studio-bg);
 }
+
+.wscn-http404-container::before {
+  content: "404";
+  position: absolute;
+  right: 4vw;
+  bottom: -4vw;
+  color: rgba(37, 99, 235, 0.05);
+  font-size: clamp(120px, 22vw, 320px);
+  font-weight: 900;
+  line-height: 1;
+}
+
 .wscn-http404 {
   position: relative;
-  width: 1200px;
-  padding: 0 50px;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(280px, 560px) minmax(280px, 420px);
+  gap: 48px;
+  align-items: center;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 44px;
   overflow: hidden;
+  border: 1px solid var(--studio-border);
+  border-radius: 34px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.12);
+  backdrop-filter: blur(18px);
+
   .pic-404 {
     position: relative;
-    float: left;
-    width: 600px;
+    width: 100%;
     overflow: hidden;
+
     &__parent {
       width: 100%;
+      filter: drop-shadow(0 18px 28px rgba(37, 99, 235, 0.12));
     }
+
     &__child {
       position: absolute;
+
       &.left {
         width: 80px;
         top: 17px;
         left: 220px;
         opacity: 0;
-        animation-name: cloudLeft;
-        animation-duration: 2s;
-        animation-timing-function: linear;
-        animation-fill-mode: forwards;
-        animation-delay: 1s;
+        animation: cloudLeft 2s linear 1s forwards;
       }
+
       &.mid {
         width: 46px;
         top: 10px;
         left: 420px;
         opacity: 0;
-        animation-name: cloudMid;
-        animation-duration: 2s;
-        animation-timing-function: linear;
-        animation-fill-mode: forwards;
-        animation-delay: 1.2s;
+        animation: cloudMid 2s linear 1.2s forwards;
       }
+
       &.right {
         width: 62px;
         top: 100px;
         left: 500px;
         opacity: 0;
-        animation-name: cloudRight;
-        animation-duration: 2s;
-        animation-timing-function: linear;
-        animation-fill-mode: forwards;
-        animation-delay: 1s;
-      }
-      @keyframes cloudLeft {
-        0% {
-          top: 17px;
-          left: 220px;
-          opacity: 0;
-        }
-        20% {
-          top: 33px;
-          left: 188px;
-          opacity: 1;
-        }
-        80% {
-          top: 81px;
-          left: 92px;
-          opacity: 1;
-        }
-        100% {
-          top: 97px;
-          left: 60px;
-          opacity: 0;
-        }
-      }
-      @keyframes cloudMid {
-        0% {
-          top: 10px;
-          left: 420px;
-          opacity: 0;
-        }
-        20% {
-          top: 40px;
-          left: 360px;
-          opacity: 1;
-        }
-        70% {
-          top: 130px;
-          left: 180px;
-          opacity: 1;
-        }
-        100% {
-          top: 160px;
-          left: 120px;
-          opacity: 0;
-        }
-      }
-      @keyframes cloudRight {
-        0% {
-          top: 100px;
-          left: 500px;
-          opacity: 0;
-        }
-        20% {
-          top: 120px;
-          left: 460px;
-          opacity: 1;
-        }
-        80% {
-          top: 180px;
-          left: 340px;
-          opacity: 1;
-        }
-        100% {
-          top: 200px;
-          left: 300px;
-          opacity: 0;
-        }
+        animation: cloudRight 2s linear 1s forwards;
       }
     }
   }
+
   .bullshit {
     position: relative;
-    float: left;
-    width: 300px;
-    padding: 30px 0;
     overflow: hidden;
+
     &__oops {
-      font-size: 32px;
-      font-weight: bold;
-      line-height: 40px;
-      color: #1482f0;
+      margin-bottom: 18px;
+      color: var(--studio-accent);
+      font-size: 40px;
+      font-weight: 900;
+      line-height: 1.1;
       opacity: 0;
-      margin-bottom: 20px;
-      animation-name: slideUp;
-      animation-duration: 0.5s;
-      animation-fill-mode: forwards;
+      animation: slideUp 0.5s forwards;
     }
+
     &__headline {
-      font-size: 20px;
-      line-height: 24px;
-      color: #222;
-      font-weight: bold;
+      margin-bottom: 14px;
+      color: var(--studio-title);
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.35;
       opacity: 0;
-      margin-bottom: 10px;
-      animation-name: slideUp;
-      animation-duration: 0.5s;
-      animation-delay: 0.1s;
-      animation-fill-mode: forwards;
+      animation: slideUp 0.5s 0.1s forwards;
     }
+
     &__info {
-      font-size: 13px;
-      line-height: 21px;
-      color: grey;
+      max-width: 360px;
+      margin-bottom: 28px;
+      color: var(--studio-text);
+      font-size: 14px;
+      line-height: 1.9;
       opacity: 0;
-      margin-bottom: 30px;
-      animation-name: slideUp;
-      animation-duration: 0.5s;
-      animation-delay: 0.2s;
-      animation-fill-mode: forwards;
+      animation: slideUp 0.5s 0.2s forwards;
     }
+
     &__return-home {
-      display: block;
-      float: left;
-      width: 110px;
-      height: 36px;
-      background: #1482f0;
-      border-radius: 100px;
-      text-align: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 128px;
+      height: 42px;
+      padding: 0 20px;
+      border-radius: 999px;
       color: #ffffff;
+      background: linear-gradient(135deg, #2563eb 0%, #38bdf8 100%);
+      box-shadow: 0 14px 28px rgba(37, 99, 235, 0.22);
       opacity: 0;
       font-size: 14px;
-      line-height: 36px;
+      font-weight: 700;
       cursor: pointer;
-      animation-name: slideUp;
-      animation-duration: 0.5s;
-      animation-delay: 0.3s;
-      animation-fill-mode: forwards;
+      animation: slideUp 0.5s 0.3s forwards;
     }
-    @keyframes slideUp {
-      0% {
-        transform: translateY(60px);
-        opacity: 0;
-      }
-      100% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
+  }
+}
+
+@keyframes cloudLeft {
+  0% { top: 17px; left: 220px; opacity: 0; }
+  20% { top: 33px; left: 188px; opacity: 1; }
+  80% { top: 81px; left: 92px; opacity: 1; }
+  100% { top: 97px; left: 60px; opacity: 0; }
+}
+
+@keyframes cloudMid {
+  0% { top: 10px; left: 420px; opacity: 0; }
+  20% { top: 40px; left: 360px; opacity: 1; }
+  70% { top: 130px; left: 180px; opacity: 1; }
+  100% { top: 160px; left: 120px; opacity: 0; }
+}
+
+@keyframes cloudRight {
+  0% { top: 100px; left: 500px; opacity: 0; }
+  20% { top: 120px; left: 460px; opacity: 1; }
+  80% { top: 180px; left: 340px; opacity: 1; }
+  100% { top: 200px; left: 300px; opacity: 0; }
+}
+
+@keyframes slideUp {
+  0% { transform: translateY(50px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@media (max-width: 900px) {
+  .wscn-http404 {
+    grid-template-columns: 1fr;
+    padding: 28px;
   }
 }
 </style>

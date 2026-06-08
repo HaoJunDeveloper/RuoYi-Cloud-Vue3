@@ -12,11 +12,11 @@
       <template v-if="appStore.device !== 'mobile'">
         <header-search id="header-search" class="right-menu-item" />
 
-        <el-tooltip content="源码地址" effect="dark" placement="bottom">
+        <el-tooltip content="工作室官网" effect="dark" placement="bottom">
           <ruo-yi-git id="ruoyi-git" class="right-menu-item hover-effect" />
         </el-tooltip>
 
-        <el-tooltip content="文档地址" effect="dark" placement="bottom">
+        <el-tooltip content="联系我们" effect="dark" placement="bottom">
           <ruo-yi-doc id="ruoyi-doc" class="right-menu-item hover-effect" />
         </el-tooltip>
 
@@ -40,7 +40,7 @@
 
       <el-dropdown @command="handleCommand" class="avatar-container right-menu-item hover-effect" trigger="hover">
         <div class="avatar-wrapper">
-          <img :src="userStore.avatar" class="user-avatar" />
+          <img :src="userStore.avatar" class="user-avatar" alt="用户头像" />
           <span class="user-nickname"> {{ userStore.nickName }} </span>
         </div>
         <template #dropdown>
@@ -181,39 +181,50 @@ async function toggleTheme(event?: MouseEvent): Promise<void> {
 }
 
 .navbar {
-  height: 50px;
+  height: 64px;
   overflow: hidden;
   position: relative;
-  background: var(--navbar-bg);
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  padding: 0 18px 0 12px;
+  background: transparent;
+  border-bottom: none;
+  box-shadow: none;
   display: flex;
   align-items: center;
-  // padding: 0 8px;
   box-sizing: border-box;
 
   .hamburger-container {
-    line-height: 46px;
-    height: 100%;
+    line-height: 40px;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
     -webkit-tap-highlight-color: transparent;
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-shrink: 0;
-    margin-right: 8px;
+    margin-right: 10px;
+    border-radius: 14px;
+    color: var(--studio-muted, #64748b);
 
     &:hover {
-      background: rgba(0, 0, 0, 0.025);
+      color: var(--studio-accent, #2563eb);
+      background: var(--studio-accent-soft, rgba(37, 99, 235, 0.1));
+      box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.08);
+      transform: translateY(-1px);
     }
   }
 
   .breadcrumb-container {
     flex-shrink: 0;
+    color: var(--studio-muted, #64748b);
   }
 
   .topmenu-container {
     position: absolute;
-    left: 50px;
+    left: 64px;
+    right: 360px;
+    overflow: hidden;
   }
 
   .topbar-container {
@@ -230,6 +241,7 @@ async function toggleTheme(event?: MouseEvent): Promise<void> {
     line-height: 50px;
     display: flex;
     align-items: center;
+    gap: 8px;
     margin-left: auto;
 
     &:focus {
@@ -237,19 +249,27 @@ async function toggleTheme(event?: MouseEvent): Promise<void> {
     }
 
     .right-menu-item {
-      display: inline-block;
-      padding: 0 8px;
-      height: 100%;
-      font-size: 18px;
-      color: #5a5e66;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 40px;
+      height: 40px;
+      padding: 0 10px;
+      border-radius: 14px;
+      font-size: 17px;
+      color: var(--studio-muted, #64748b);
       vertical-align: text-bottom;
+      box-sizing: border-box;
 
       &.hover-effect {
         cursor: pointer;
-        transition: background 0.3s;
+        transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 
         &:hover {
-          background: rgba(0, 0, 0, 0.025);
+          color: var(--studio-accent, #2563eb);
+          background: var(--studio-accent-soft, rgba(37, 99, 235, 0.1));
+          box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.08);
+          transform: translateY(-1px);
         }
       }
 
@@ -259,37 +279,51 @@ async function toggleTheme(event?: MouseEvent): Promise<void> {
 
         svg {
           transition: transform 0.3s;
-          
+
           &:hover {
-            transform: scale(1.15);
+            transform: scale(1.15) rotate(-8deg);
           }
         }
       }
     }
 
     .avatar-container {
-      margin-right: 0px;
-      padding-right: 0px;
+      min-width: auto;
+      height: 42px;
+      margin-right: 0;
+      padding: 0 5px 0 11px;
+      border-radius: 999px;
+      background: var(--studio-panel-solid, rgba(255, 255, 255, 0.86));
+      box-shadow: inset 0 0 0 1px var(--studio-border, rgba(148, 163, 184, 0.22)), 0 8px 20px rgba(15, 23, 42, 0.05);
 
       .avatar-wrapper {
-        margin-top: 10px;
-        right: 8px;
         position: relative;
+        display: inline-flex;
+        align-items: center;
+        height: 100%;
+        right: 0;
+        margin-top: 0;
+        gap: 8px;
 
         .user-avatar {
           cursor: pointer;
           width: 30px;
           height: 30px;
-          margin-right: 8px;
+          margin-right: 0;
           border-radius: 50%;
+          box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
         }
 
         .user-nickname{
-          position: relative;
-          left: 0px;
-          bottom: 10px;
-          font-size: 14px;
-          font-weight: bold;
+          position: static;
+          max-width: 96px;
+          color: var(--studio-title, #0f172a);
+          font-size: 13px;
+          font-weight: 800;
+          line-height: 1;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
 
         i {
@@ -300,6 +334,20 @@ async function toggleTheme(event?: MouseEvent): Promise<void> {
           font-size: 12px;
         }
       }
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .navbar {
+    padding-right: 10px;
+
+    .topmenu-container {
+      right: 220px;
+    }
+
+    .right-menu {
+      gap: 4px;
     }
   }
 }

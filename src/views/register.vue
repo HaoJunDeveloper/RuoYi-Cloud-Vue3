@@ -157,64 +157,100 @@ getCode()
 
 <style lang='scss' scoped>
 .register {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  background-image: url("../assets/images/login-background.jpg");
-  background-size: cover;
+  min-height: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 16% 12%, rgba(59, 130, 246, 0.24), transparent 28%),
+    radial-gradient(circle at 82% 18%, rgba(14, 165, 233, 0.18), transparent 30%),
+    linear-gradient(135deg, #071326 0%, #0f2f62 48%, #f8fbff 49%, #eef4ff 100%);
 }
+
+.register::before {
+  content: "";
+  position: absolute;
+  inset: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 32px;
+  pointer-events: none;
+}
+
 .title {
-  margin: 0px auto 30px auto;
+  margin: 0 auto 28px;
   text-align: center;
-  color: #707070;
+  color: var(--studio-title);
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 1px;
 }
 
 .register-form {
-  border-radius: 6px;
-  background: #ffffff;
-  width: 400px;
-  padding: 25px 25px 5px 25px;
+  position: relative;
+  z-index: 1;
+  width: 430px;
+  padding: 34px 34px 18px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.22);
+  backdrop-filter: blur(18px);
+
   .el-input {
-    height: 40px;
+    height: 44px;
+
+    :deep(.el-input__wrapper) {
+      border-radius: 14px;
+      box-shadow: 0 0 0 1px rgba(226, 232, 240, 0.95) inset;
+      background: rgba(248, 250, 252, 0.88);
+    }
+
     input {
-      height: 40px;
+      height: 44px;
     }
   }
+
   .input-icon {
-    height: 39px;
-    width: 14px;
-    margin-left: 0px;
+    height: 42px;
+    width: 15px;
+    margin-left: 2px;
+    color: var(--studio-accent);
   }
 }
+
 .register-tip {
   font-size: 13px;
   text-align: center;
   color: #bfbfbf;
 }
+
 .register-code {
   width: 33%;
-  height: 40px;
+  height: 44px;
   float: right;
+
   img {
     cursor: pointer;
     vertical-align: middle;
   }
 }
+
 .el-register-footer {
-  height: 40px;
-  line-height: 40px;
   position: fixed;
-  bottom: 0;
+  z-index: 1;
+  bottom: 16px;
   width: 100%;
   text-align: center;
-  color: #fff;
-  font-family: Arial;
+  color: rgba(255, 255, 255, 0.78);
   font-size: 12px;
   letter-spacing: 1px;
 }
+
 .register-code-img {
-  height: 40px;
+  height: 44px;
   padding-left: 12px;
+  border-radius: 12px;
 }
 </style>

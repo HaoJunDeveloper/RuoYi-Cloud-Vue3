@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-const url = ref<string>('http://doc.ruoyi.vip/ruoyi-cloud')
+const url = ref<string>('https://www.smallpig1997.top/contact')
 
 function goto(): void {
   window.open(url.value)

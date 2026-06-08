@@ -371,23 +371,24 @@ function handleScroll(): void {
 </script>
 
 <style lang="scss" scoped>
-$tags-bar-height: 34px;
+$tags-bar-height: 38px;
 
 .tags-view-container {
   height: $tags-bar-height;
   width: 100%;
-  background: var(--tags-bg, #fff);
-  border-bottom: 1px solid var(--tags-item-border, #d8dce5);
+  background: var(--tags-bg, rgba(255, 255, 255, 0.72));
+  border-bottom: 1px solid rgba(148, 163, 184, 0.14);
   display: flex;
   align-items: center;
   overflow: hidden;
+  backdrop-filter: blur(18px);
 
-  $btn-width: 28px;
-  $btn-color: #71717a;
-  $btn-hover-bg: #f0f2f5;
-  $btn-hover-color: #303133;
+  $btn-width: 34px;
+  $btn-color: #64748b;
+  $btn-hover-bg: rgba(239, 246, 255, 0.9);
+  $btn-hover-color: #1d4ed8;
   $btn-disabled-color: #c0c4cc;
-  $divider: 1px solid var(--tags-item-border, #d8dce5);
+  $divider: 1px solid rgba(148, 163, 184, 0.18);
 
   .tags-nav-btn {
     flex-shrink: 0;
@@ -426,38 +427,49 @@ $tags-bar-height: 34px;
       align-items: center;
       position: relative;
       cursor: pointer;
-      height: 26px;
-      line-height: 26px;
-      border: 1px solid var(--tags-item-border, #d8dce5);
-      color: var(--tags-item-text, #495060);
-      background: var(--tags-item-bg, #fff);
-      padding: 0 8px;
+      height: 28px;
+      line-height: 28px;
+      border: 1px solid var(--tags-item-border, rgba(148, 163, 184, 0.2));
+      color: var(--tags-item-text, #475569);
+      background: var(--tags-item-bg, rgba(255, 255, 255, 0.78));
+      padding: 0 10px;
       font-size: 12px;
-      margin-left: 5px;
-      border-radius: 3px;
+      font-weight: 650;
+      margin-left: 6px;
+      border-radius: 999px;
       text-decoration: none;
       vertical-align: middle;
-      padding-top: 2px !important;
+      padding-top: 0 !important;
+      box-shadow: 0 6px 14px rgba(15, 23, 42, 0.04);
+      transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
 
-      &:first-of-type { margin-left: 6px; }
+      &:hover {
+        color: var(--studio-accent, #2563eb);
+        background: var(--studio-accent-soft, rgba(37, 99, 235, 0.1));
+        border-color: rgba(37, 99, 235, 0.16);
+        transform: translateY(-1px);
+      }
+
+      &:first-of-type { margin-left: 8px; }
       &:last-of-type  { margin-right: 15px; }
     }
   }
 
   &:not(.tags-view-container--chrome) .tags-view-wrapper .tags-view-item.active {
-    background-color: #42b983;
-    color: #fff;
-    border-color: #42b983;
+    background: linear-gradient(135deg, var(--current-color, #2563eb), #38bdf8) !important;
+    color: #fff !important;
+    border-color: transparent !important;
+    box-shadow: 0 10px 22px rgba(37, 99, 235, 0.22);
 
     &::before {
       content: '';
-      background: #fff;
+      background: rgba(255, 255, 255, 0.9);
       display: inline-block;
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       position: relative;
-      margin-right: 5px;
+      margin-right: 6px;
     }
   }
 
@@ -482,16 +494,20 @@ $tags-bar-height: 34px;
     font-size: 13px;
     border-left: $divider;
     user-select: none;
-    transition: background 0.15s, color 0.15s;
+    transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
 
     &:hover {
       background: $btn-hover-bg;
       color: $btn-hover-color;
+      transform: translateY(-1px);
     }
   }
 
   .tags-refresh-btn {
-    width: 60px;
+    width: 72px;
+    gap: 4px;
+    color: #475569;
+    font-weight: 600;
   }
 
   .contextmenu {
@@ -500,31 +516,37 @@ $tags-bar-height: 34px;
     z-index: 3000;
     position: fixed;
     list-style-type: none;
-    padding: 5px 0;
-    border-radius: 4px;
+    padding: 6px 0;
+    border-radius: 14px;
     font-size: 12px;
-    font-weight: 400;
-    color: var(--tags-item-text, #333);
-    box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, .3);
-    border: 1px solid var(--el-border-color-light, #e4e7ed);
+    font-weight: 600;
+    color: var(--tags-item-text, #334155);
+    box-shadow: 0 18px 42px rgba(15, 23, 42, 0.16);
+    border: 1px solid var(--studio-border, rgba(148, 163, 184, 0.2));
+    overflow: hidden;
 
     li {
       margin: 0;
-      padding: 7px 16px;
+      padding: 8px 16px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      transition: background 0.16s ease, color 0.16s ease;
 
       &:hover {
-        background: var(--tags-item-hover, #eee);
+        color: var(--studio-accent, #2563eb);
+        background: var(--studio-accent-soft, rgba(37, 99, 235, 0.1));
       }
     }
   }
 
   &.tags-view-container--chrome {
-    --chrome-strip-bg: #ffffff;
-    --chrome-strip-border: var(--el-border-color-lighter, #e4e7ed);
-    --chrome-tab-active-bg: var(--el-color-primary-light-9);
-    --chrome-tab-text: var(--el-text-color-regular, #606266);
-    --chrome-tab-text-active: var(--el-color-primary);
+    --chrome-strip-bg: var(--studio-panel, rgba(255, 255, 255, 0.88));
+    --chrome-strip-border: var(--studio-border, rgba(148, 163, 184, 0.18));
+    --chrome-tab-active-bg: var(--studio-panel-solid, #ffffff);
+    --chrome-tab-text: var(--studio-muted, #64748b);
+    --chrome-tab-text-active: var(--studio-accent, var(--el-color-primary));
     --chrome-wing-r: 10px;
 
     overflow: visible;
@@ -620,7 +642,7 @@ $tags-bar-height: 34px;
           background: var(--chrome-tab-active-bg) !important;
           border: none !important;
           border-radius: var(--chrome-wing-r) var(--chrome-wing-r) 0 0;
-          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+          box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
 
           &::before {
             box-shadow: calc(var(--chrome-wing-r) * 0.5) calc(var(--chrome-wing-r) * 0.5) 0 calc(var(--chrome-wing-r) * 0.5) var(--chrome-tab-active-bg);
@@ -649,7 +671,7 @@ $tags-bar-height: 34px;
       border-radius: 50%;
       transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
       cursor: pointer;
-      
+
       .el-icon-close {
         width: 1em;
         height: 1em;
@@ -659,10 +681,10 @@ $tags-bar-height: 34px;
         align-items: center;
         justify-content: center;
       }
-      
+
       &:hover {
         background-color: var(--tags-close-hover, #b4bccc);
-        
+
         .el-icon-close {
           color: #fff;
         }
