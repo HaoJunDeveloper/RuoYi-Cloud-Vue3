@@ -99,33 +99,46 @@ $--color-info: #909399;
 // 暗黑模式变量
 html.dark {
   /* 默认通用 */
-  --el-bg-color: #141414;
-  --el-bg-color-overlay: #1d1e1f;
-  --el-text-color-primary: #ffffff;
-  --el-text-color-regular: #d0d0d0;
-  --el-border-color: #434343;
-  --el-border-color-light: #434343;
+  --el-bg-color: #0f172a;
+  --el-bg-color-page: #09111f;
+  --el-bg-color-overlay: #162033;
+  --el-fill-color: rgba(30, 41, 59, 0.9);
+  --el-fill-color-light: rgba(51, 65, 85, 0.54);
+  --el-fill-color-lighter: rgba(71, 85, 105, 0.34);
+  --el-fill-color-blank: #111b2e;
+  --el-text-color-primary: #f8fafc;
+  --el-text-color-regular: #cbd5e1;
+  --el-text-color-secondary: #94a3b8;
+  --el-text-color-placeholder: #64748b;
+  --el-border-color: rgba(148, 163, 184, 0.22);
+  --el-border-color-light: rgba(148, 163, 184, 0.18);
+  --el-border-color-lighter: rgba(148, 163, 184, 0.12);
+  --el-mask-color: rgba(2, 6, 23, 0.62);
+  --el-mask-color-extra-light: rgba(2, 6, 23, 0.32);
+  --el-box-shadow: 0 18px 42px rgba(2, 6, 23, 0.38);
+  --el-box-shadow-light: 0 10px 24px rgba(2, 6, 23, 0.26);
   --el-menu-text-color: #d0d0d0;
   --sidebar-logo-text: #d0d0d0;
 
   /* primary */
-  --primary-bg: #18212b;
+  --primary-bg: rgba(37, 99, 235, 0.16);
 
   /* 侧边栏 */
-  --sidebar-bg: #141414;
-  --sidebar-text: #ffffff;
-  --menu-hover: #2d2d2d;
+  --sidebar-bg: #0f172a;
+  --sidebar-text: #f8fafc;
+  --menu-hover: rgba(37, 99, 235, 0.18);
   --menu-active-text: #{$menuActiveText};
 
   --studio-bg: #0b1220;
-  --studio-panel: rgba(15, 23, 42, 0.86);
+  --studio-panel: rgba(15, 23, 42, 0.82);
   --studio-panel-solid: #111827;
   --studio-title: #f8fafc;
   --studio-text: #cbd5e1;
   --studio-muted: #94a3b8;
-  --studio-border: rgba(148, 163, 184, 0.18);
-  --studio-shadow: 0 18px 42px rgba(0, 0, 0, 0.32);
-  --studio-shadow-soft: 0 10px 26px rgba(0, 0, 0, 0.22);
+  --studio-border: rgba(148, 163, 184, 0.16);
+  --studio-border-strong: rgba(148, 163, 184, 0.24);
+  --studio-shadow: 0 18px 42px rgba(2, 6, 23, 0.38);
+  --studio-shadow-soft: 0 10px 26px rgba(2, 6, 23, 0.24);
   --studio-accent: var(--el-color-primary, #2563eb);
   --studio-accent-soft: rgba(37, 99, 235, 0.2);
   --studio-shell-bg: radial-gradient(circle at 18% 0%, rgba(37, 99, 235, 0.18), transparent 30%), linear-gradient(180deg, #0b1220 0%, #111827 100%);
@@ -134,9 +147,9 @@ html.dark {
   --studio-sidebar-active: rgba(37, 99, 235, 0.28);
 
   /* 顶部导航栏 */
-  --navbar-bg: #141414;
-  --navbar-text: #ffffff;
-  --navbar-hover: #141414;
+  --navbar-bg: rgba(11, 18, 32, 0.86);
+  --navbar-text: #f8fafc;
+  --navbar-hover: rgba(37, 99, 235, 0.14);
 
   /* 标签栏 */
   --tags-bg: rgba(15, 23, 42, 0.72);
@@ -150,21 +163,21 @@ html.dark {
   --tags-card-active-border: var(--tags-card-active-bg);
 
   /* splitpanes 组件暗黑模式变量 */
-  --splitpanes-bg: #141414;
-  --splitpanes-border: #303030;
-  --splitpanes-splitter-bg: #1d1e1f;
-  --splitpanes-splitter-hover-bg: #2d2d2d;
+  --splitpanes-bg: #101827;
+  --splitpanes-border: rgba(148, 163, 184, 0.14);
+  --splitpanes-splitter-bg: #182235;
+  --splitpanes-splitter-hover-bg: #22314d;
 
   /* blockquote 暗黑模式变量 */
-  --blockquote-bg: #1d1e1f;
-  --blockquote-border: #303030;
+  --blockquote-bg: #162033;
+  --blockquote-border: rgba(148, 163, 184, 0.18);
   --blockquote-text: #d0d0d0;
 
   /* Cron 时间表达式 模式变量 */
-  --cron-border: #303030;
+  --cron-border: #22314d;
 
   /* splitpanes default-theme 暗黑模式变量 */
-  --splitpanes-default-bg: #141414;
+  --splitpanes-default-bg: #101827;
 
   /* 侧边栏菜单覆盖 */
   .sidebar-container {
@@ -232,37 +245,71 @@ html.dark {
 
   /* 页签样式覆盖 */
   .navbar {
-    box-shadow: 0 1px 4px rgba(255, 255, 255, 0.08);
+    background: linear-gradient(180deg, rgba(11, 18, 32, 0.88) 0%, rgba(11, 18, 32, 0.72) 100%);
+    box-shadow: inset 0 -1px 0 rgba(148, 163, 184, 0.08), 0 12px 28px rgba(2, 6, 23, 0.22);
+    backdrop-filter: blur(18px);
+  }
+  .topmenu-container.el-menu--horizontal,
+  .topbar-menu.el-menu--horizontal {
+    background: transparent !important;
   }
   .tags-view-container {
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.82) 0%, rgba(15, 23, 42, 0.68) 100%);
+    border-bottom-color: rgba(148, 163, 184, 0.08);
+
+    .tags-nav-btn,
+    .tags-action-btn {
+      color: var(--el-text-color-secondary);
+
+      &:hover:not(.disabled) {
+        background: rgba(37, 99, 235, 0.14);
+        color: var(--el-text-color-primary);
+      }
+    }
+
+    &:not(.tags-view-container--chrome) .tags-view-wrapper .tags-view-item {
+      background: rgba(30, 41, 59, 0.74);
+      border-color: rgba(148, 163, 184, 0.12);
+      color: var(--el-text-color-regular);
+
+      &:hover {
+        background: rgba(37, 99, 235, 0.14);
+        border-color: rgba(96, 165, 250, 0.18);
+        color: #eff6ff;
+      }
+    }
+
+    &:not(.tags-view-container--chrome) .tags-view-wrapper .tags-view-item.active {
+      background-color: var(--tags-card-active-bg) !important;
+      border-color: var(--tags-card-active-border) !important;
+      color: var(--current-color, #409eff) !important;
+      box-shadow: 0 14px 28px rgba(37, 99, 235, 0.24);
+
+      &::before {
+        background: var(--current-color, #409eff) !important;
+      }
+    }
+
     &.tags-view-container--chrome {
-      --chrome-strip-bg: var(--el-bg-color);
-      --chrome-strip-border: var(--el-border-color);
-      --chrome-tab-active-bg: var(--el-bg-color-overlay);
-      --chrome-tab-active-bg: color-mix(in srgb, var(--el-color-primary) 22%, var(--el-bg-color-overlay) 78%);
+      --chrome-strip-bg: rgba(15, 23, 42, 0.82);
+      --chrome-strip-border: rgba(148, 163, 184, 0.1);
+      --chrome-tab-active-bg: rgba(22, 32, 51, 0.96);
       --chrome-tab-text: var(--el-text-color-secondary);
-      --chrome-tab-text-active: var(--el-color-primary);
+      --chrome-tab-text-active: #eff6ff;
+
       .tags-view-wrapper .tags-view-item:not(.active) + .tags-view-item:not(.active) {
         border-left-color: var(--el-border-color);
       }
+
       .tags-view-wrapper .tags-view-item {
         &:hover:not(.active) {
           background: var(--el-fill-color, #303030) !important;
           color: var(--el-text-color-primary);
         }
+
         &.active {
           box-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
         }
-      }
-    }
-    &:not(.tags-view-container--chrome) .tags-view-wrapper .tags-view-item.active {
-      background-color: var(--tags-card-active-bg) !important;
-      border-color: var(--tags-card-active-border) !important;
-      color: var(--current-color, #409eff) !important;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
-
-      &::before {
-        background: var(--current-color, #409eff) !important;
       }
     }
   }
@@ -331,17 +378,152 @@ html.dark {
 
   /* 表格样式覆盖 */
   .el-table {
-    --el-table-header-bg-color: var(--el-bg-color-overlay) !important;
-    --el-table-header-text-color: var(--el-text-color-regular) !important;
-    --el-table-border-color: var(--el-border-color-light) !important;
-    --el-table-row-hover-bg-color: var(--el-bg-color-overlay) !important;
+    --el-table-bg-color: rgba(15, 23, 42, 0.78) !important;
+    --el-table-tr-bg-color: rgba(15, 23, 42, 0.78) !important;
+    --el-table-expanded-cell-bg-color: rgba(15, 23, 42, 0.72) !important;
+    --el-table-header-bg-color: rgba(22, 32, 51, 0.94) !important;
+    --el-table-header-text-color: #dbe6f5 !important;
+    --el-table-border-color: rgba(148, 163, 184, 0.12) !important;
+    --el-table-row-hover-bg-color: rgba(37, 99, 235, 0.12) !important;
+    --el-table-current-row-bg-color: rgba(37, 99, 235, 0.14) !important;
+    color: var(--el-text-color-regular);
+
+    &::before {
+      background-color: rgba(148, 163, 184, 0.12) !important;
+    }
+
+    .el-table__inner-wrapper::before,
+    .el-table__border-left-patch {
+      background-color: rgba(148, 163, 184, 0.12) !important;
+    }
 
     .el-table__header-wrapper, .el-table__fixed-header-wrapper {
       th {
-        background-color: var(--el-bg-color-overlay, #f8f8f9) !important;
-        color: var(--el-text-color-regular, #515a6e);
+        background: linear-gradient(180deg, rgba(22, 32, 51, 0.98) 0%, rgba(19, 28, 45, 0.96) 100%) !important;
+        color: #dbe6f5 !important;
       }
     }
+
+    td,
+    th.is-leaf,
+    .el-table__cell {
+      background-color: transparent !important;
+      border-bottom-color: rgba(148, 163, 184, 0.1) !important;
+    }
+  }
+
+  .el-pagination {
+    --el-pagination-bg-color: transparent;
+    --el-pagination-button-bg-color: rgba(15, 23, 42, 0.78);
+    --el-pagination-button-disabled-bg-color: rgba(15, 23, 42, 0.4);
+    --el-pagination-hover-color: var(--el-color-primary);
+    color: var(--el-text-color-regular);
+  }
+
+  .el-input__wrapper,
+  .el-textarea__inner,
+  .el-select__wrapper,
+  .el-date-editor,
+  .el-range-editor.el-input__wrapper,
+  .el-input-number,
+  .el-input-group__append,
+  .el-input-group__prepend {
+    background: rgba(15, 23, 42, 0.72) !important;
+    border-color: rgba(148, 163, 184, 0.16) !important;
+    box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.12) !important;
+    color: var(--el-text-color-regular) !important;
+  }
+
+  .el-input__wrapper:hover,
+  .el-select__wrapper:hover,
+  .el-date-editor:hover,
+  .el-range-editor.el-input__wrapper:hover,
+  .el-input-number:hover,
+  .el-textarea__inner:hover {
+    box-shadow: inset 0 0 0 1px rgba(96, 165, 250, 0.22) !important;
+  }
+
+  .el-input.is-focus .el-input__wrapper,
+  .el-textarea__inner:focus,
+  .el-select__wrapper.is-focused,
+  .el-date-editor.is-active,
+  .el-range-editor.is-active {
+    background: rgba(17, 27, 46, 0.94) !important;
+    box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.72), 0 0 0 4px rgba(37, 99, 235, 0.12) !important;
+  }
+
+  .el-input__inner,
+  .el-textarea__inner,
+  .el-select__selected-item,
+  .el-range-input,
+  .el-input-number__decrease,
+  .el-input-number__increase {
+    color: var(--el-text-color-regular) !important;
+  }
+
+  .el-input__inner::placeholder,
+  .el-textarea__inner::placeholder,
+  .el-range-input::placeholder {
+    color: var(--el-text-color-placeholder) !important;
+  }
+
+  .el-select-dropdown,
+  .el-picker-panel,
+  .el-popover.el-popper,
+  .el-dropdown__popper .el-dropdown-menu,
+  .el-cascader__dropdown,
+  .el-autocomplete-suggestion,
+  .el-dialog,
+  .el-drawer,
+  .el-message-box {
+    background: linear-gradient(180deg, rgba(17, 27, 46, 0.98) 0%, rgba(13, 20, 34, 0.98) 100%) !important;
+    border: 1px solid rgba(148, 163, 184, 0.16) !important;
+    box-shadow: 0 22px 48px rgba(2, 6, 23, 0.42) !important;
+    backdrop-filter: blur(16px);
+  }
+
+  .el-select-dropdown__item,
+  .el-dropdown-menu__item,
+  .el-cascader-node,
+  .el-picker-panel__shortcut,
+  .el-date-table td .el-date-table-cell,
+  .el-month-table td .cell,
+  .el-year-table td .cell {
+    color: var(--el-text-color-regular);
+  }
+
+  .el-select-dropdown__item.hover,
+  .el-select-dropdown__item:hover,
+  .el-dropdown-menu__item:not(.is-disabled):focus,
+  .el-dropdown-menu__item:not(.is-disabled):hover,
+  .el-cascader-node:not(.is-disabled):focus,
+  .el-cascader-node:not(.is-disabled):hover,
+  .el-picker-panel__shortcut:hover {
+    background-color: rgba(37, 99, 235, 0.14) !important;
+    color: #eff6ff !important;
+  }
+
+  .el-button:not(.el-button--primary):not(.is-text):not(.is-link) {
+    background: rgba(15, 23, 42, 0.74);
+    border-color: rgba(148, 163, 184, 0.16);
+    color: #dbe6f5;
+    box-shadow: none;
+
+    &:hover,
+    &:focus {
+      background: rgba(30, 41, 59, 0.88);
+      border-color: rgba(96, 165, 250, 0.3);
+      color: #f8fafc;
+    }
+  }
+
+  .el-button--primary {
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.24);
+  }
+
+  .el-button--info,
+  .el-button--default {
+    --el-button-hover-text-color: #f8fafc;
   }
 
   /* 树组件高亮样式覆盖 */

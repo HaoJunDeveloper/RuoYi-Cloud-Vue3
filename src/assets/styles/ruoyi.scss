@@ -112,6 +112,60 @@
   }
 }
 
+html.dark .el-dialog {
+  border-color: rgba(148, 163, 184, 0.16);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.98) 0%, rgba(13, 20, 34, 0.98) 100%) !important;
+  box-shadow: 0 28px 60px rgba(2, 6, 23, 0.42);
+
+  .el-dialog__header {
+    border-bottom-color: rgba(148, 163, 184, 0.12);
+    background: linear-gradient(180deg, rgba(17, 27, 46, 0.98) 0%, rgba(15, 23, 42, 0.96) 100%);
+  }
+
+  .el-dialog__title,
+  .el-dialog__headerbtn .el-dialog__close {
+    color: var(--el-text-color-primary);
+  }
+
+  .el-dialog__headerbtn:hover .el-dialog__close {
+    color: var(--el-color-primary);
+  }
+
+  .el-dialog__body {
+    background: transparent;
+    color: var(--el-text-color-regular);
+  }
+
+  .el-dialog__footer {
+    border-top-color: rgba(148, 163, 184, 0.1);
+    background: linear-gradient(180deg, rgba(17, 27, 46, 0.9) 0%, rgba(15, 23, 42, 0.96) 100%);
+  }
+
+  .dialog-footer {
+    background: transparent;
+  }
+
+  .el-form {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  .el-row {
+    margin-bottom: 10px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .el-form-item {
+    margin-bottom: 18px;
+  }
+}
+
 .el-dialog.scrollbar .el-dialog__body {
   overflow: auto;
   overflow-x: hidden;
@@ -169,6 +223,12 @@
   box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
 }
 
+html.dark .pagination-container {
+  border-color: rgba(148, 163, 184, 0.14);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.78) 100%) !important;
+  box-shadow: 0 12px 28px rgba(2, 6, 23, 0.22);
+}
+
 /* 弹窗中的分页器 */
 .el-dialog .pagination-container {
   position: static !important;
@@ -178,6 +238,12 @@
   .el-pagination {
     position: static;
   }
+}
+
+html.dark .el-dialog .pagination-container {
+  background: transparent !important;
+  border-color: transparent;
+  box-shadow: none;
 }
 
 /* 移动端适配 */
