@@ -23,3 +23,8 @@ export * from "./system/operlog";
 export * from "./monitor/job";
 export * from "./monitor/jobLog";
 export * from "./monitor/online";
+
+// approval 模块
+export * from "./approval/template";
+export * from "./approval/instance";
+export * from "./approval/message";

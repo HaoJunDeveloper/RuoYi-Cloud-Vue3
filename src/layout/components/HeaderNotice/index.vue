@@ -1,29 +1,48 @@
 <template>
   <div>
-    <el-popover ref="noticePopover" placement="bottom-end" :width="320" trigger="manual" v-model:visible="noticeVisible" popper-class="notice-popover">
-      <!-- 弹出内容 -->
+    <el-popover ref="noticePopover" placement="bottom-end" :width="340" trigger="manual" v-model:visible="noticeVisible" popper-class="notice-popover">
       <div class="notice-header">
-        <span class="notice-title">通知公告</span>
+        <el-tabs v-model="activeTab" class="notice-tabs" @tab-change="handleTabChange">
+          <el-tab-pane label="通知公告" name="notice" />
+          <el-tab-pane label="审批待办" name="audit" />
+        </el-tabs>
         <span class="notice-mark-all" @click="markAllRead">全部已读</span>
       </div>
+
       <div v-if="noticeLoading" class="notice-loading">
         <el-icon class="is-loading"><Loading /></el-icon> 加载中...
       </div>
-      <div v-else-if="noticeList.length === 0" class="notice-empty">
-        <el-icon style="font-size:24px;display:block;margin-bottom:6px;"><Postcard /></el-icon>
-        暂无公告
-      </div>
-      <div v-else>
-        <div v-for="item in noticeList" :key="item.noticeId" class="notice-item" :class="{ 'is-read': item.isRead }" @click="previewNotice(item)">
-          <el-tag size="small" :type="item.noticeType === '1' ? 'warning' : 'success'" class="notice-tag">
-            {{ item.noticeType === '1' ? '通知' : '公告' }}
-          </el-tag>
-          <span class="notice-item-title">{{ item.noticeTitle }}</span>
-          <span class="notice-item-date">{{ item.createTime }}</span>
-        </div>
-      </div>
 
-      <!-- 触发器 -->
+      <template v-else-if="activeTab === 'notice'">
+        <div v-if="noticeList.length === 0" class="notice-empty">
+          <el-icon style="font-size:24px;display:block;margin-bottom:6px;"><Postcard /></el-icon>
+          暂无公告
+        </div>
+        <div v-else>
+          <div v-for="item in noticeList" :key="item.noticeId" class="notice-item" :class="{ 'is-read': item.isRead }" @click="previewNotice(item)">
+            <el-tag size="small" :type="item.noticeType === '1' ? 'warning' : 'success'" class="notice-tag">
+              {{ item.noticeType === '1' ? '通知' : '公告' }}
+            </el-tag>
+            <span class="notice-item-title">{{ item.noticeTitle }}</span>
+            <span class="notice-item-date">{{ item.createTime }}</span>
+          </div>
+        </div>
+      </template>
+
+      <template v-else>
+        <div v-if="auditList.length === 0" class="notice-empty">
+          <el-icon style="font-size:24px;display:block;margin-bottom:6px;"><Postcard /></el-icon>
+          暂无待办
+        </div>
+        <div v-else>
+          <div v-for="item in auditList" :key="item.msgId" class="notice-item" :class="{ 'is-read': item.isRead === '1' }" @click="openAuditMessage(item)">
+            <el-tag size="small" type="danger" class="notice-tag">审批</el-tag>
+            <span class="notice-item-title">{{ item.msgTitle }}：{{ item.msgContent }}</span>
+            <span class="notice-item-date">{{ item.createTime }}</span>
+          </div>
+        </div>
+      </template>
+
       <template #reference>
         <div class="right-menu-item hover-effect notice-trigger" @mouseenter="onNoticeEnter" @mouseleave="onNoticeLeave">
           <svg-icon icon-class="bell" />
@@ -32,7 +51,6 @@
       </template>
     </el-popover>
 
-    <!-- 预览弹窗 -->
     <notice-detail-view ref="noticeViewRef" />
   </div>
 </template>
@@ -40,26 +58,34 @@
 <script setup lang="ts">
 import NoticeDetailView from './DetailView.vue'
 import { listNoticeTop, markNoticeRead, markNoticeReadAll } from '@/api/system/notice'
+import { listAuditMessageTop, markAuditMessageRead, markAuditMessageReadAll } from '@/api/approval/message'
 import type { SysNotice } from '@/types/api/system/notice'
+import type { SysMessage } from '@/types'
 
 interface PopperElement extends HTMLElement {
   _noticeBound?: boolean
 }
 
+const router = useRouter()
 const noticePopover = ref<InstanceType<typeof import('element-plus')['ElPopover']> | null>(null)
 const noticeList = ref<SysNotice[]>([])
-const unreadCount = ref<number>(0)
+const auditList = ref<SysMessage[]>([])
+const noticeUnreadCount = ref<number>(0)
+const auditUnreadCount = ref<number>(0)
+const unreadCount = computed(() => noticeUnreadCount.value + auditUnreadCount.value)
 const noticeLoading = ref<boolean>(false)
 const noticeVisible = ref<boolean>(false)
+const activeTab = ref<'notice' | 'audit'>('notice')
 const noticeLeaveTimer = ref<ReturnType<typeof setTimeout> | null>(null)
-  const { proxy } = getCurrentInstance()
+const { proxy } = getCurrentInstance()
 
-// 加载顶部公告列表
 function loadNoticeTop(): void {
   noticeLoading.value = true
-  listNoticeTop().then(res => {
-    noticeList.value = res.data || []
-    unreadCount.value = res.unreadCount !== undefined ? res.unreadCount : noticeList.value.filter((n: SysNotice) => !n.isRead).length
+  Promise.all([listNoticeTop(), listAuditMessageTop()]).then(([noticeRes, auditRes]) => {
+    noticeList.value = noticeRes.data || []
+    noticeUnreadCount.value = noticeRes.unreadCount !== undefined ? noticeRes.unreadCount : noticeList.value.filter((n: SysNotice) => !n.isRead).length
+    auditList.value = auditRes.data || []
+    auditUnreadCount.value = auditRes.unreadCount || 0
   }).finally(() => {
     noticeLoading.value = false
   })
@@ -67,7 +93,10 @@ function loadNoticeTop(): void {
 
 onMounted(() => loadNoticeTop())
 
-// 鼠标移入铃铛区域
+function handleTabChange(): void {
+  loadNoticeTop()
+}
+
 function onNoticeEnter(): void {
   clearTimeout(noticeLeaveTimer.value ?? undefined)
   noticeVisible.value = true
@@ -83,29 +112,45 @@ function onNoticeEnter(): void {
   })
 }
 
-// 鼠标离开铃铛区域
 function onNoticeLeave(): void {
   noticeLeaveTimer.value = setTimeout(() => { noticeVisible.value = false }, 150)
 }
 
-// 预览公告详情
 function previewNotice(item: SysNotice): void {
   if (!item.isRead) {
     markNoticeRead(item.noticeId!).catch(() => {})
     const idx = noticeList.value.indexOf(item)
     if (idx !== -1) noticeList.value[idx] = { ...item, isRead: true }
-    unreadCount.value = Math.max(0, unreadCount.value - 1)
+    noticeUnreadCount.value = Math.max(0, noticeUnreadCount.value - 1)
   }
   proxy.$refs["noticeViewRef"].open(item.noticeId)
 }
 
-// 全部已读
+function openAuditMessage(item: SysMessage): void {
+  if (item.isRead !== '1') {
+    markAuditMessageRead(item.msgId!).catch(() => {})
+    const idx = auditList.value.indexOf(item)
+    if (idx !== -1) auditList.value[idx] = { ...item, isRead: '1' }
+    auditUnreadCount.value = Math.max(0, auditUnreadCount.value - 1)
+  }
+  noticeVisible.value = false
+  if (item.bizId) {
+    router.push('/audit/detail/' + item.bizId)
+  }
+}
+
 function markAllRead(): void {
-  const ids = noticeList.value.map((n: SysNotice) => n.noticeId).join(',')
-  if (!ids) return
-  markNoticeReadAll(ids).catch(() => {})
-  noticeList.value = noticeList.value.map((n: SysNotice) => ({ ...n, isRead: true }))
-  unreadCount.value = 0
+  if (activeTab.value === 'notice') {
+    const ids = noticeList.value.map((n: SysNotice) => n.noticeId).join(',')
+    if (!ids) return
+    markNoticeReadAll(ids).catch(() => {})
+    noticeList.value = noticeList.value.map((n: SysNotice) => ({ ...n, isRead: true }))
+    noticeUnreadCount.value = 0
+    return
+  }
+  markAuditMessageReadAll().catch(() => {})
+  auditList.value = auditList.value.map((n: SysMessage) => ({ ...n, isRead: '1' }))
+  auditUnreadCount.value = 0
 }
 </script>
 
@@ -136,20 +181,19 @@ function markAllRead(): void {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 14px;
+  padding: 0 12px;
   background: #f7f9fb;
   border-bottom: 1px solid #eee;
-  font-size: 13px;
-  font-weight: 600;
-  color: #333;
 }
+.notice-tabs { flex: 1; }
+.notice-tabs :deep(.el-tabs__header) { margin: 0; }
+.notice-tabs :deep(.el-tabs__nav-wrap::after) { display: none; }
 .notice-popover .notice-mark-all {
   font-size: 12px;
   color: var(--el-color-primary);
-  font-weight: normal;
   cursor: pointer;
+  padding-left: 10px;
 }
-.notice-popover .notice-mark-all:hover { color: #2b7cc1; }
 .notice-popover .notice-loading,
 .notice-popover .notice-empty {
   padding: 24px;

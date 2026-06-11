@@ -1,8 +1,8 @@
 {
-  "name": "ruoyi",
+  "name": "admin",
   "version": "3.6.8",
-  "description": "若依管理系统",
-  "author": "若依",
+  "description": "管理系统",
+  "author": "管理员",
   "license": "MIT",
   "type": "module",
   "scripts": {
