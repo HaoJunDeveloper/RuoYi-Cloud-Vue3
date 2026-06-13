@@ -17,6 +17,20 @@ export interface AuditTemplateQueryParams extends PageDomain {
   status?: string
 }
 
+export interface SysNotifyChannel extends BaseEntity {
+  channelId?: number
+  channelCode?: string
+  channelName?: string
+  channelConfig?: string
+  status?: string
+}
+
+export interface NotifyChannelQueryParams extends PageDomain {
+  channelCode?: string
+  channelName?: string
+  status?: string
+}
+
 export interface SysAuditNode extends BaseEntity {
   nodeId?: number
   flowId?: number

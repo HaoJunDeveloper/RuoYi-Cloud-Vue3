@@ -47,12 +47,22 @@
         <el-button class="mt10" type="primary" plain icon="Plus" @click="addField">添加字段</el-button>
 
         <el-divider content-position="left">通知配置</el-divider>
-        <el-checkbox-group v-model="notifyEvents">
-          <el-checkbox label="submit">提交后通知审批人</el-checkbox>
-          <el-checkbox label="pass">通过后通知申请人</el-checkbox>
-          <el-checkbox label="reject">驳回后通知申请人</el-checkbox>
-          <el-checkbox label="cancel">撤销后通知审批人</el-checkbox>
-        </el-checkbox-group>
+        <el-form-item label="通知渠道">
+          <el-checkbox-group v-model="notifyChannels">
+            <el-checkbox v-for="channel in notifyChannelList" :key="channel.channelCode" :label="channel.channelCode" :disabled="channel.status !== '0'">
+              {{ channel.channelName }}
+              <span v-if="channel.status !== '0'" class="channel-disabled">（未启用）</span>
+            </el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+        <el-form-item label="通知事件">
+          <el-checkbox-group v-model="notifyEvents">
+            <el-checkbox label="submit">提交后通知审批人</el-checkbox>
+            <el-checkbox label="pass">通过后通知申请人</el-checkbox>
+            <el-checkbox label="reject">驳回后通知申请人</el-checkbox>
+            <el-checkbox label="cancel">撤销后通知审批人</el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
         <el-form-item label="备注" class="mt16"><el-input v-model="form.remark" type="textarea" /></el-form-item>
       </el-form>
       <template #footer><div class="dialog-footer"><el-button type="primary" @click="submitForm">确 定</el-button><el-button @click="cancel">取 消</el-button></div></template>
@@ -62,14 +72,17 @@
 
 <script setup lang="ts" name="AuditTemplate">
 import { listAuditTemplate, getAuditTemplate, addAuditTemplate, updateAuditTemplate, delAuditTemplate } from '@/api/approval/template'
-import type { AuditTemplateQueryParams, SysAuditTemplate } from '@/types'
+import { listNotifyChannel } from '@/api/approval/notify'
+import type { AuditTemplateQueryParams, SysAuditTemplate, SysNotifyChannel } from '@/types'
 
 interface FormFieldConfig { prop: string; label: string; type: string; placeholder?: string; required: boolean; optionsText?: string }
 
 const { proxy } = getCurrentInstance()
 const router = useRouter()
 const templateList = ref<SysAuditTemplate[]>([])
+const notifyChannelList = ref<SysNotifyChannel[]>([])
 const formFields = ref<FormFieldConfig[]>([])
+const notifyChannels = ref<string[]>(['IN_APP'])
 const notifyEvents = ref<string[]>(['submit', 'pass', 'reject'])
 const loading = ref(true)
 const showSearch = ref(true)
@@ -94,8 +107,13 @@ function getList() {
   loading.value = true
   listAuditTemplate(queryParams.value).then(res => { templateList.value = res.rows; total.value = res.total; loading.value = false })
 }
+function getNotifyChannels() {
+  listNotifyChannel({ pageNum: 1, pageSize: 20 }).then(res => {
+    notifyChannelList.value = res.rows || []
+  })
+}
 function cancel() { open.value = false; reset() }
-function reset() { form.value = { status: '0' }; formFields.value = defaultFields(); notifyEvents.value = ['submit', 'pass', 'reject'] }
+function reset() { form.value = { status: '0' }; formFields.value = defaultFields(); notifyChannels.value = ['IN_APP']; notifyEvents.value = ['submit', 'pass', 'reject'] }
 function handleQuery() { queryParams.value.pageNum = 1; getList() }
 function resetQuery() { proxy.resetForm('queryRef'); handleQuery() }
 function handleSelectionChange(selection: SysAuditTemplate[]) { ids.value = selection.map(item => item.templateId!); single.value = selection.length !== 1; multiple.value = !selection.length }
@@ -106,7 +124,9 @@ function handleUpdate(row?: SysAuditTemplate) {
   getAuditTemplate(id!).then(res => {
     form.value = res.data || {}
     formFields.value = parseFormSchema(form.value.formSchema)
-    notifyEvents.value = parseNotifyConfig(form.value.notifyConfig)
+    const notifyConfig = parseNotifyConfig(form.value.notifyConfig)
+    notifyChannels.value = notifyConfig.channels
+    notifyEvents.value = notifyConfig.events
     open.value = true
     title.value = '修改审批模板'
   })
@@ -123,17 +143,17 @@ function submitForm() {
   })
 }
 function buildFormSchema() {
-  const fields = formFields.value.filter(item => item.prop && item.label).map(item => ({
+  const fields = formFields.value.filter((item: FormFieldConfig) => item.prop && item.label).map((item: FormFieldConfig) => ({
     prop: item.prop,
     label: item.label,
     type: item.type,
     placeholder: item.placeholder,
     required: item.required,
-    options: item.type === 'select' ? (item.optionsText || '').split(',').map(text => text.trim()).filter(Boolean).map(text => ({ label: text, value: text })) : undefined
+    options: item.type === 'select' ? (item.optionsText || '').split(',').map((text: string) => text.trim()).filter(Boolean).map((text: string) => ({ label: text, value: text })) : undefined
   }))
   return JSON.stringify({ fields })
 }
-function buildNotifyConfig() { return JSON.stringify({ channel: ['IN_APP'], events: notifyEvents.value }) }
+function buildNotifyConfig() { return JSON.stringify({ channel: notifyChannels.value.length ? notifyChannels.value : ['IN_APP'], events: notifyEvents.value }) }
 function parseFormSchema(schema?: string): FormFieldConfig[] {
   if (!schema) return defaultFields()
   try {
@@ -144,14 +164,22 @@ function parseFormSchema(schema?: string): FormFieldConfig[] {
   } catch { return defaultFields() }
 }
 function parseNotifyConfig(config?: string) {
-  if (!config) return ['submit', 'pass', 'reject']
-  try { const data = JSON.parse(config); return Array.isArray(data.events) ? data.events : ['submit', 'pass', 'reject'] } catch { return ['submit', 'pass', 'reject'] }
+  const fallback = { channels: ['IN_APP'], events: ['submit', 'pass', 'reject'] }
+  if (!config) return fallback
+  try {
+    const data = JSON.parse(config)
+    return {
+      channels: Array.isArray(data.channel) && data.channel.length ? data.channel : fallback.channels,
+      events: Array.isArray(data.events) ? data.events : fallback.events
+    }
+  } catch { return fallback }
 }
 function defaultFields(): FormFieldConfig[] { return [{ prop: 'reason', label: '申请原因', type: 'textarea', required: true }] }
 function handleDelete(row?: SysAuditTemplate) { const templateIds = row?.templateId || ids.value; proxy.$modal.confirm('是否确认删除审批模板编号为"' + templateIds + '"的数据项？').then(() => delAuditTemplate(templateIds)).then(() => { getList(); proxy.$modal.msgSuccess('删除成功') }) }
 function goFlow(row: SysAuditTemplate) { router.push({ path: '/audit/flow', query: { templateId: row.templateId, templateName: row.templateName } }) }
 function goApply(row: SysAuditTemplate) { router.push({ path: '/audit/my', query: { templateCode: row.templateCode } }) }
 getList()
+getNotifyChannels()
 </script>
 <style lang="scss" scoped>
 .template-guide { margin-bottom: 16px; }
@@ -165,5 +193,5 @@ getList()
 .mb8 { margin-bottom: 8px; }
 .mb12 { margin-bottom: 12px; }
 .mt10 { margin-top: 10px; }
-.mt16 { margin-top: 16px; }
+.channel-disabled { color: #909399; font-size: 12px; }
 </style>

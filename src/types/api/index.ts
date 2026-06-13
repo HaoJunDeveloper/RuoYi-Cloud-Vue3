@@ -28,3 +28,4 @@ export * from "./monitor/online";
 export * from "./approval/template";
 export * from "./approval/instance";
 export * from "./approval/message";
+export * from "./approval/notify";
